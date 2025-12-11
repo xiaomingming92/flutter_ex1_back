@@ -1,0 +1,50 @@
+{
+  "name": "ex1_back",
+  "version": "1.0.0",
+  "description": "ex1 flutter 项目后端服务",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backup": "node scripts/backup-data.js",
+    "restore": "node scripts/restore-data.js",
+    "update-schema": "node scripts/update-schema-safely.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gittx:ex1_back.git"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "cos-nodejs-sdk-v5": "^2.15.4",
+    "dotenv": "^17.2.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "prisma": "^6.6.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.10.1",
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "volta": {
+    "node": "25.2.0"
+  },
+  "author": "xmm",
+  "license": "ISC"
+}

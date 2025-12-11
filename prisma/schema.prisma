@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+// 用户表
+model User {
+  id        String   @id @default(uuid())
+  username  String?  @unique // 用户名（可选）
+  phone     String?  @unique // 手机号（可选）
+  password  String   // 加密后的密码
+  name      String?  // 显示名称
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关联关系
+  articles Article[]
+
+  @@map("users")
+}
+
+// 文章表
+model Article {
+  id        String   @id @default(uuid())
+  title     String   // 标题
+  content   String   @db.Text // 文章内容（富文本）
+  authorId  String   // 作者ID
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关联关系
+  author        User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  waterfallItem WaterfallItem?
+
+  @@map("articles")
+}
+
+// 瀑布流项目表
+model WaterfallItem {
+  id          String   @id @default(uuid())
+  imageUrl    String   // 图片URL（OSS地址）
+  description String?  @db.Text // 文字说明
+  articleId   String   @unique // 关联文章ID
+  sortOrder   Int      @default(0) // 排序字段
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关联关系
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([sortOrder, createdAt])
+  @@map("waterfall_items")
+}
+
+// 用户Token表（用于token刷新和黑名单管理）
+model UserToken {
+  id             String   @id @default(uuid())
+  userId         String   // 用户ID
+  accessToken    String   @db.VarChar(255)// Access Token
+  refreshToken   String   @db.VarChar(255)@unique // Refresh Token
+  accessExpiresAt  DateTime // Access Token过期时间
+  refreshExpiresAt DateTime // Refresh Token过期时间
+  createdAt      DateTime @default(now())
+  revokedAt      DateTime? // 撤销时间（用于主动注销）
+
+  @@index([userId])
+  @@index([accessToken]) // 字段长度255，索引不会超过MySQL限制
+  @@map("user_tokens")
+}
+
