@@ -1,3 +1,11 @@
+/*
+ * @Author: Z2-WIN\xmm wujixmm@gmail.com
+ * @Date: 2025-12-11 11:45:31
+ * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime: 2025-12-15 15:14:39
+ * @FilePath: \studioProjects\flutter_ex1_back\src\middlewares\auth.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken, TokenPayload } from '../utils/jwt.js';
 import { AppError } from './errorHandler.js';
