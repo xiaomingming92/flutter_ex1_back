@@ -11,6 +11,7 @@ import cors from 'cors';
 import { config } from './config/env.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import routes from './routes/index.js';
+import { logger, httpLoggerMiddleware } from './utils/logger.js';
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+// Add HTTP request logging middleware
+app.use(httpLoggerMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -37,6 +40,6 @@ app.use(errorHandler);
 // 启动服务器
 const PORT = config.port;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  logger.info(`Server is running on port ${PORT} in ${config.nodeEnv} mode`);
 });
 

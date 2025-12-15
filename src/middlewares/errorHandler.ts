@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { logger } from '../utils/logger.js';
 
 export interface AppError extends Error {
   statusCode?: number;
@@ -15,7 +16,8 @@ export const errorHandler = (
   const message = err.message || 'Internal Server Error';
   const errorCode = err.code || 500;
 
-  console.error('Error:', err);
+  // 记录错误到日志系统
+  logger.error(`[错误处理] ${req.method} ${req.originalUrl} - IP: ${req.ip} - 状态码: ${statusCode} - 错误: ${message}${err.stack ? ` - 堆栈: ${err.stack}` : ''}`);
 
   res.status(statusCode).json({
     success: false,

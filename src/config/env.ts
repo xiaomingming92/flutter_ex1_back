@@ -26,5 +26,10 @@ export const config = {
     bucket: process.env.TENCENT_OSS_BUCKET || '',
     domain: process.env.TENCENT_OSS_DOMAIN || '',
   },
+  logging: {
+    level: process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
+    maxFileSize: parseInt(process.env.LOG_MAX_FILE_SIZE || '5242880'), // Default 5MB
+    maxFiles: parseInt(process.env.LOG_MAX_FILES || '5'), // Default 5 files
+  },
 };
 
