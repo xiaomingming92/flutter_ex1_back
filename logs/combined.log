@@ -4,3 +4,217 @@
 2025-12-15 17:20:19:2019 info: Server is running on port 3000 in development mode
 2025-12-15 17:21:37:2137 info: Server is running on port 3000 in development mode
 2025-12-15 17:21:38:2138 info: Server is running on port 3000 in development mode
+2025-12-19 14:35:36:3536 info: Server is running on port 3000 in development mode
+2025-12-19 14:36:07:367 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:36:10:3610 error: [错误处理] GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1 - 状态码: 500 - 错误: 
+Invalid `prisma.waterfallItem.findMany()` invocation in
+C:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts:39:30
+
+  36 const skip = (page - 1) * pageSize;
+  37 
+  38 const [items, total] = await Promise.all([
+→ 39     prisma.waterfallItem.findMany(
+Can't reach database server at `xxxx:3306`
+
+Please make sure your database server is running at `xxxx:3306`. - 堆栈: PrismaClientInitializationError: 
+Invalid `prisma.waterfallItem.findMany()` invocation in
+C:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts:39:30
+
+  36 const skip = (page - 1) * pageSize;
+  37 
+  38 const [items, total] = await Promise.all([
+→ 39     prisma.waterfallItem.findMany(
+Can't reach database server at `xxxx:3306`
+
+Please make sure your database server is running at `xxxx:3306`.
+    at zn.handleRequestError (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:121:7759)
+    at zn.handleAndLogRequestError (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:121:6784)
+    at zn.request (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:121:6491)
+    at async l (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:130:9778)
+    at async Promise.all (index 0)
+    at async getWaterfallItems (C:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts:38:28)
+    at async getWaterfallItemsController (C:\Users\xmm\studioProjects\flutter_ex1_back\src\controllers\waterfallController.ts:25:20)
+2025-12-19 14:36:10:3610 http: GET /api/waterfall?page=1&pageSize=10 - Status: 500 - Duration: 2752ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:37:35:3735 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:37:38:3738 error: [错误处理] GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1 - 状态码: 500 - 错误: 
+Invalid `prisma.waterfallItem.findMany()` invocation in
+C:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts:39:30
+
+  36 const skip = (page - 1) * pageSize;
+  37 
+  38 const [items, total] = await Promise.all([
+→ 39     prisma.waterfallItem.findMany(
+Can't reach database server at `xxxx:3306`
+
+Please make sure your database server is running at `xxxx:3306`. - 堆栈: PrismaClientInitializationError: 
+Invalid `prisma.waterfallItem.findMany()` invocation in
+C:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts:39:30
+
+  36 const skip = (page - 1) * pageSize;
+  37 
+  38 const [items, total] = await Promise.all([
+→ 39     prisma.waterfallItem.findMany(
+Can't reach database server at `xxxx:3306`
+
+Please make sure your database server is running at `xxxx:3306`.
+    at zn.handleRequestError (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:121:7759)
+    at zn.handleAndLogRequestError (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:121:6784)
+    at zn.request (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:121:6491)
+    at async l (C:\Users\xmm\studioProjects\flutter_ex1_back\node_modules\@prisma\client\runtime\library.js:130:9778)
+    at async Promise.all (index 0)
+    at async getWaterfallItems (C:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts:38:28)
+    at async getWaterfallItemsController (C:\Users\xmm\studioProjects\flutter_ex1_back\src\controllers\waterfallController.ts:25:20)
+2025-12-19 14:37:38:3738 http: GET /api/waterfall?page=1&pageSize=10 - Status: 500 - Duration: 2709ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:38:55:3855 info: Server is running on port 3000 in development mode
+2025-12-19 14:46:23:4623 info: Server is running on port 3000 in development mode
+2025-12-19 14:46:24:4624 info: Server is running on port 3000 in development mode
+2025-12-19 14:46:37:4637 info: Server is running on port 3000 in development mode
+2025-12-19 14:47:24:4724 info: Server is running on port 3000 in development mode
+2025-12-19 14:47:48:4748 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:47:48:4748 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 14:47:48:4748 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 264ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:49:08:498 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:49:08:498 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 14:49:08:498 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 48ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:56:42:5642 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 14:56:42:5642 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 14:56:42:5642 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 14:56:42:5642 http: POST /api/auth/login - Status: 200 - Duration: 419ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:57:00:570 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:57:00:570 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 14:57:00:570 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 145ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:57:32:5732 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:57:32:5732 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 14:57:32:5732 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 60ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:57:59:5759 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:57:59:5759 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 14:57:59:5759 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 55ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:59:26:5926 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 14:59:26:5926 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 14:59:26:5926 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 14:59:26:5926 http: POST /api/auth/login - Status: 200 - Duration: 310ms - IP: ::ffff:127.0.0.1
+2025-12-19 14:59:28:5928 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 14:59:29:5929 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 14:59:29:5929 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 33ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:00:00 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:00:00 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:00:00:00 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 66ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:02:02 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:02:02 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:00:02:02 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 16ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:10:010 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:10:010 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:00:10:010 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 22ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:11:011 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:00:11:011 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:00:11:011 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 17ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:01:13:113 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:01:13:113 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:01:13:113 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:01:13:113 http: POST /api/auth/login - Status: 200 - Duration: 190ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:01:15:115 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:01:15:115 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:01:15:115 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 34ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:03:07:37 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:03:07:37 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:03:07:37 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:03:07:37 http: POST /api/auth/login - Status: 200 - Duration: 327ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:05:21:521 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:05:21:521 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:05:21:521 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:05:21:521 http: POST /api/auth/login - Status: 200 - Duration: 186ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:06:42:642 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:06:42:642 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:06:42:642 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:06:42:642 http: POST /api/auth/login - Status: 200 - Duration: 201ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:07:37:737 info: Server is running on port 3000 in development mode
+2025-12-19 15:07:59:759 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:07:59:759 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:07:59:759 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:07:59:759 http: POST /api/auth/login - Status: 200 - Duration: 367ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:13:41:1341 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:13:41:1341 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:13:41:1341 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:13:41:1341 http: POST /api/auth/login - Status: 200 - Duration: 378ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:15:24:1524 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:15:24:1524 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:15:24:1524 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 185ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:17:07:177 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:17:07:177 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:17:07:177 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 29ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:22:22:2222 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:22:22:2222 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:22:22:2222 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 137ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:26:28:2628 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:26:28:2628 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:26:28:2628 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 56ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:33:56:3356 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:33:57:3357 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:33:57:3357 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 152ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:35:59:3559 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:35:59:3559 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:35:59:3559 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 40ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:37:17:3717 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:37:17:3717 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:37:17:3717 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:37:17:3717 http: POST /api/auth/login - Status: 200 - Duration: 255ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:37:27:3727 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:37:27:3727 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:37:27:3727 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 50ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:38:59:3859 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:39:00:390 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:39:00:390 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 98ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:45:00:450 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:45:00:450 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:45:00:450 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 154ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:46:21:4621 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:46:21:4621 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:46:21:4621 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 35ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:46:42:4642 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:46:42:4642 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:46:42:4642 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 44ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:46:43:4643 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:46:43:4643 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:46:43:4643 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 16ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:49:27:4927 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:49:27:4927 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:49:27:4927 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:49:27:4927 http: POST /api/auth/login - Status: 200 - Duration: 349ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:49:30:4930 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:49:30:4930 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:49:30:4930 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 28ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:49:48:4948 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:49:48:4948 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:49:48:4948 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 30ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:50:56:5056 http: POST /api/auth/login - IP: ::ffff:127.0.0.1
+2025-12-19 15:50:56:5056 info: [JWT] 生成access_token - 用户: xmm
+2025-12-19 15:50:56:5056 info: [JWT] 生成refresh_token - 用户: xmm
+2025-12-19 15:50:57:5057 http: POST /api/auth/login - Status: 200 - Duration: 352ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:50:58:5058 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:50:58:5058 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:50:58:5058 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 96ms - IP: ::ffff:127.0.0.1
+2025-12-19 15:51:05:515 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 15:51:05:515 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 15:51:05:515 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 36ms - IP: ::ffff:127.0.0.1
+2025-12-19 16:05:24:524 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 16:05:24:524 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 16:05:24:524 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 189ms - IP: ::ffff:127.0.0.1
+2025-12-19 16:05:26:526 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 16:05:26:526 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 16:05:26:526 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 39ms - IP: ::ffff:127.0.0.1
+2025-12-19 16:05:29:529 http: GET /api/waterfall?page=1&pageSize=10 - IP: ::ffff:127.0.0.1
+2025-12-19 16:05:29:529 info: 获取瀑布流数据成功，页码：1，每页数据：[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+2025-12-19 16:05:29:529 http: GET /api/waterfall?page=1&pageSize=10 - Status: 200 - Duration: 16ms - IP: ::ffff:127.0.0.1
+2025-12-19 16:21:03:213 info: Server is running on port 3000 in development mode
+2025-12-19 16:22:43:2243 info: Server is running on port 3000 in development mode
+2025-12-19 16:36:44:3644 info: Server is running on port 3000 in development mode
+2025-12-19 16:36:49:3649 info: Server is running on port 3000 in development mode
+2025-12-19 16:37:26:3726 info: Server is running on port 3000 in development mode
+2025-12-19 16:39:00:390 info: Server is running on port 3000 in development mode
+2025-12-19 16:39:03:393 info: Server is running on port 3000 in development mode
+2025-12-19 16:39:04:394 info: Server is running on port 3000 in development mode
+2025-12-19 16:39:17:3917 info: Server is running on port 3000 in development mode
+2025-12-19 17:09:53:953 info: Server is running on port 3000 in development mode
+2025-12-19 17:09:54:954 info: Server is running on port 3000 in development mode
+2025-12-19 17:13:51:1351 info: Server is running on port 3000 in development mode
+2025-12-19 17:13:52:1352 info: Server is running on port 3000 in development mode

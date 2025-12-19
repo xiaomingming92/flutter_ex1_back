@@ -8,7 +8,7 @@ export type LoginUserRes = {
     refreshToken: string;
     accessExpiresAt: number;
     refreshExpiresAt: number;
-    user: { id: string; username?: string; phone?: string; name?: string };
+    userInfo: { id: string; username?: string; phone?: string; name?: string };
 }
 /**
  * 用户登录（支持用户名或手机号）
@@ -82,7 +82,7 @@ export async function loginUser(
         refreshToken: refresh_token,
         accessExpiresAt: accessExpiresAt.valueOf(),
         refreshExpiresAt: refreshExpiresAt.valueOf(),
-        user: {
+        userInfo: {
             id: user.id,
             username: user.username || undefined,
             phone: user.phone || undefined,

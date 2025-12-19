@@ -1,9 +1,9 @@
 /*
  * @Author: xiaomingming wujixmm@gmail.com
  * @Date: 2025-12-06 11:11:46
- * @LastEditors: xiaomingming wujixmm@gmail.com
- * @LastEditTime: 2025-12-06 15:01:26
- * @FilePath: /ex1_back/src/services/waterfallService.ts
+ * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime: 2025-12-19 16:39:02
+ * @FilePath: \studioProjects\flutter_ex1_back\src\services\waterfallService.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { prisma } from '../config/database.js';
@@ -15,6 +15,8 @@ export interface WaterfallItemResponse {
     articleId: string;
     createdAt: Date;
     updatedAt: Date;
+    width: number;
+    height: number;
 }
 
 /**
@@ -54,6 +56,11 @@ export async function getWaterfallItems(
         }),
         prisma.waterfallItem.count(),
     ]);
+    // TODO 每个图片的url 都是腾讯oss服务的oss url，问题是如何获取图片的宽度和高度
+    // 这里先假设每个图片的宽度和高度都是100
+    items.forEach(item => {
+        
+    })
 
     const totalPages = Math.ceil(total / pageSize);
 

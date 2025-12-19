@@ -1,7 +1,16 @@
+/*
+ * @Author: Z2-WIN\xmm wujixmm@gmail.com
+ * @Date: 2025-12-11 11:45:31
+ * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime: 2025-12-19 17:09:53
+ * @FilePath: \studioProjects\flutter_ex1_back\src\services\ossService.ts
+ * @Description: 
+ */
 import COS from 'cos-nodejs-sdk-v5';
 import { config } from '../config/env.js';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
+import sharp from 'sharp';
 
 const cos = new COS({
   SecretId: config.tencentOSS.secretId,
@@ -13,13 +22,13 @@ const cos = new COS({
  * @param file 文件Buffer或Stream
  * @param fileName 文件名
  * @param folder 文件夹路径（可选）
- * @returns 文件URL
+ * @returns 文件URL和图片宽高信息（如果是图片）
  */
 export async function uploadFile(
   file: Buffer,
   fileName: string,
   folder?: string
-): Promise<string> {
+): Promise<{ url: string; width?: number; height?: number; mimeType?: string; size?: number; filename?: string }> {
   try {
     // 生成唯一文件名
     const ext = path.extname(fileName);
@@ -34,11 +43,44 @@ export async function uploadFile(
     });
 
     // 返回完整的文件URL
-    const fileUrl = config.tencentOSS.domain
-      ? `${config.tencentOSS.domain}/${key}`
-      : `https://${config.tencentOSS.bucket}.cos.${config.tencentOSS.region}.myqcloud.com/${key}`;
+    // 使用cos.getObjectUrl方法生成URL，更可靠地处理不同配置
+    const fileUrl = cos.getObjectUrl({
+      Bucket: config.tencentOSS.bucket,
+      Region: config.tencentOSS.region,
+      Key: key,
+      // Domain: config.tencentOSS.domain || undefined,
+      Sign: false, // 公开访问，不生成签名URL
+    });
 
-    return fileUrl;
+    // 获取图片宽高信息（仅支持图片文件）
+    let width: number | undefined;
+    let height: number | undefined;
+    let mimeType: string | undefined;
+    let size: number | undefined;
+
+    // 检查是否为图片文件
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'];
+    if (imageExtensions.includes(ext.toLowerCase())) {
+      try {
+        const metadata = await sharp(file).metadata();
+        width = metadata.width;
+        height = metadata.height;
+        mimeType = metadata.format;
+        size = metadata.size;
+      } catch (error) {
+        console.warn('Failed to get image metadata:', error);
+        // 继续执行，即使获取宽高失败也返回URL
+      }
+    }
+
+    return {
+      url: fileUrl,
+      width,
+      height,
+      mimeType,
+      size,
+      filename: fileName
+    };
   } catch (error) {
     console.error('OSS upload error:', error);
     throw new Error('文件上传失败');

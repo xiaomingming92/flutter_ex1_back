@@ -2,12 +2,31 @@
  * @Author: Z2-WIN\xmm wujixmm@gmail.com
  * @Date: 2025-12-08 17:02:08
  * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime: 2025-12-08 17:02:12
- * @FilePath: \studioProjects\ex1_back\scripts\backup-data.js
+ * @LastEditTime: 2025-12-19 18:02:54
+ * @FilePath: \studioProjects\flutter_ex1_back\scripts\backup-data.cjs
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-const { PrismaClient } = require('@prisma/client');
+// 按优先级加载环境变量：.env.local 会覆盖 .env
+const path = require('path');
 const fs = require('fs');
+const dotenv = require('dotenv');
+const { PrismaClient } = require('@prisma/client');
+
+// 读取并解析.env文件
+const envPath = path.resolve(__dirname, '../.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const envVars = dotenv.parse(envContent);
+  Object.assign(process.env, envVars);
+}
+
+// 读取并解析.env.local文件（覆盖.env中的同名变量）
+const envLocalPath = path.resolve(__dirname, '../.env.local');
+if (fs.existsSync(envLocalPath)) {
+  const envLocalContent = fs.readFileSync(envLocalPath, 'utf8');
+  const envLocalVars = dotenv.parse(envLocalContent);
+  Object.assign(process.env, envLocalVars);
+}
 
 const prisma = new PrismaClient();
 
@@ -29,6 +48,10 @@ async function backupData() {
     const waterfallItems = await prisma.waterfallItem.findMany();
     fs.writeFileSync('./backups/waterfallItems.json', JSON.stringify(waterfallItems, null, 2));
     
+    // 备份 Image 表
+    const images = await prisma.image.findMany();
+    fs.writeFileSync('./backups/images.json', JSON.stringify(images, null, 2));
+
     console.log('数据备份完成!');
   } catch (error) {
     console.error('备份过程中出现错误:', error);

@@ -1,5 +1,24 @@
-const { PrismaClient } = require('@prisma/client');
+// 按优先级加载环境变量：.env.local 会覆盖 .env
+const path = require('path');
 const fs = require('fs');
+const dotenv = require('dotenv');
+const { PrismaClient } = require('@prisma/client');
+
+// 读取并解析.env文件
+const envPath = path.resolve(__dirname, '../.env');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const envVars = dotenv.parse(envContent);
+  Object.assign(process.env, envVars);
+}
+
+// 读取并解析.env.local文件（覆盖.env中的同名变量）
+const envLocalPath = path.resolve(__dirname, '../.env.local');
+if (fs.existsSync(envLocalPath)) {
+  const envLocalContent = fs.readFileSync(envLocalPath, 'utf8');
+  const envLocalVars = dotenv.parse(envLocalContent);
+  Object.assign(process.env, envLocalVars);
+}
 
 const prisma = new PrismaClient();
 
@@ -9,10 +28,12 @@ async function restoreData() {
     const users = JSON.parse(fs.readFileSync('./backups/users.json', 'utf8'));
     const userTokens = JSON.parse(fs.readFileSync('./backups/userTokens.json', 'utf8'));
     const articles = JSON.parse(fs.readFileSync('./backups/articles.json', 'utf8'));
+    const images = JSON.parse(fs.readFileSync('./backups/images.json', 'utf8'));
     const waterfallItems = JSON.parse(fs.readFileSync('./backups/waterfallItems.json', 'utf8'));
     
     // 清空现有数据（按依赖顺序）
     await prisma.waterfallItem.deleteMany();
+    await prisma.image.deleteMany();
     await prisma.userToken.deleteMany();
     await prisma.article.deleteMany();
     await prisma.user.deleteMany();
@@ -46,12 +67,29 @@ async function restoreData() {
       });
     }
     
+    // 恢复 Image 表数据
+    for (const image of images) {
+      await prisma.image.create({
+        data: {
+          id: image.id,
+          url: image.url,
+          width: image.width,
+          height: image.height,
+          filename: image.filename,
+          mimeType: image.mimeType,
+          size: image.size,
+          createdAt: new Date(image.createdAt),
+          updatedAt: new Date(image.updatedAt),
+        }
+      });
+    }
+
     // 恢复 WaterfallItem 表数据
     for (const item of waterfallItems) {
       await prisma.waterfallItem.create({
         data: {
           id: item.id,
-          imageUrl: item.imageUrl,
+          imageId: item.imageId,
           description: item.description,
           articleId: item.articleId,
           sortOrder: item.sortOrder,

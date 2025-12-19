@@ -41,7 +41,8 @@ export async function uploadFileController(
     const fileUrl = await uploadFile(fileBuffer, fileName, folder);
 
     res.json({
-      success: true,
+      code: 200,
+      message: '文件上传成功',
       data: {
         url: fileUrl,
         fileName,
@@ -73,7 +74,8 @@ export async function getFileDownloadUrlController(
     const downloadUrl = await getFileDownloadUrl(fileKey, expires);
 
     res.json({
-      success: true,
+      code: 200,
+      message: '文件下载URL生成成功',
       data: {
         url: downloadUrl,
         expires,

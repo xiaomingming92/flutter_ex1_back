@@ -1,3 +1,11 @@
+/*
+ * @Author: Z2-WIN\xmm wujixmm@gmail.com
+ * @Date: 2025-12-11 11:45:31
+ * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime: 2025-12-19 14:33:21
+ * @FilePath: \studioProjects\flutter_ex1_back\src\controllers\articleController.ts
+ * @Description: 
+ */
 import { Request, Response, NextFunction } from 'express';
 import { getArticleById, createArticle } from '../services/articleService.js';
 import { AppError } from '../middlewares/errorHandler.js';
@@ -22,7 +30,8 @@ export async function getArticleByIdController(
     const article = await getArticleById(id);
 
     res.json({
-      success: true,
+      code: 200,
+      message: '获取文章成功',
       data: article,
     });
   } catch (error) {
@@ -57,7 +66,8 @@ export async function createArticleController(
     const article = await createArticle(title, content, authorId);
 
     res.json({
-      success: true,
+      code: 201,
+      message: '创建文章成功',
       data: article,
     });
   } catch (error) {
