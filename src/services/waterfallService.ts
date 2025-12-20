@@ -1,11 +1,12 @@
 /*
- * @Author: xiaomingming wujixmm@gmail.com
- * @Date: 2025-12-06 11:11:46
- * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime: 2025-12-19 16:39:02
- * @FilePath: \studioProjects\flutter_ex1_back\src\services\waterfallService.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Author       : Z2-WIN\xmm wujixmm@gmail.com
+ * @Date         : 2025-12-11 11:45:31
+ * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime : 2025-12-20 11:03:16
+ * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\src\services\waterfallService.ts
+ * @Description  : 瀑布流服务
  */
+
 import { prisma } from '../config/database.js';
 
 export interface WaterfallItemResponse {
@@ -45,27 +46,30 @@ export async function getWaterfallItems(
                 { sortOrder: 'asc' },
                 { createdAt: 'desc' },
             ],
-            select: {
-                id: true,
-                imageUrl: true,
-                description: true,
-                articleId: true,
-                createdAt: true,
-                updatedAt: true,
+            include: {
+                image: true,
             },
         }),
         prisma.waterfallItem.count(),
     ]);
-    // TODO 每个图片的url 都是腾讯oss服务的oss url，问题是如何获取图片的宽度和高度
-    // 这里先假设每个图片的宽度和高度都是100
-    items.forEach(item => {
-        
-    })
+    
+    // 转换数据结构，将 image.url 映射到 imageUrl 字段
+    const formattedItems = items.map(item => ({
+        id: item.id,
+        imageUrl: item.image?.url || '',
+        description: item.description,
+        articleId: item.articleId,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        width: item.image?.width || 0,
+        height: item.image?.height || 0,
+    }));
+    // 图片的url、宽度和高度已通过连表查询从images表获取
 
     const totalPages = Math.ceil(total / pageSize);
 
     return {
-        items,
+        items: formattedItems,
         total,
         page,
         pageSize,
