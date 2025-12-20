@@ -2,7 +2,7 @@
  * @Author: Z2-WIN\xmm wujixmm@gmail.com
  * @Date: 2025-12-11 11:45:31
  * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime: 2025-12-19 17:09:53
+ * @LastEditTime: 2025-12-20 09:24:19
  * @FilePath: \studioProjects\flutter_ex1_back\src\services\ossService.ts
  * @Description: 
  */
@@ -11,12 +11,21 @@ import { config } from '../config/env.js';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import sharp from 'sharp';
+import { prisma } from '../config/database.js';
 
-const cos = new COS({
+export const cos = new COS({
   SecretId: config.tencentOSS.secretId,
   SecretKey: config.tencentOSS.secretKey,
 });
-
+type ImageInfo = {
+  url: string;
+  isImage: boolean;
+  width?: number;
+  height?: number;
+  mimeType?: string;
+  size?: number;
+  filename?: string;
+}
 /**
  * 上传文件到腾讯云OSS
  * @param file 文件Buffer或Stream
@@ -28,7 +37,7 @@ export async function uploadFile(
   file: Buffer,
   fileName: string,
   folder?: string
-): Promise<{ url: string; width?: number; height?: number; mimeType?: string; size?: number; filename?: string }> {
+): Promise<ImageInfo> {
   try {
     // 生成唯一文件名
     const ext = path.extname(fileName);
@@ -73,7 +82,7 @@ export async function uploadFile(
       }
     }
 
-    return {
+    const fileInfo = {
       url: fileUrl,
       width,
       height,
@@ -81,6 +90,11 @@ export async function uploadFile(
       size,
       filename: fileName
     };
+
+    // 处理图片元数据（纯函数）
+    const processedImageInfo = processImageMetadata(fileInfo);
+
+    return processedImageInfo;
   } catch (error) {
     console.error('OSS upload error:', error);
     throw new Error('文件上传失败');
@@ -128,5 +142,40 @@ export async function deleteFile(fileKey: string): Promise<void> {
     console.error('OSS delete error:', error);
     throw new Error('文件删除失败');
   }
+}
+
+/**
+ * 处理图片元数据（纯函数）
+ * @param fileInfo 图片文件信息
+ * @returns 处理后的图片数据，用于数据库保存
+ */
+function processImageMetadata(fileInfo: { 
+  url: string; 
+  width?: number; 
+  height?: number; 
+  mimeType?: string; 
+  size?: number; 
+  filename?: string 
+}): { 
+  url: string; 
+  width?: number; 
+  height?: number; 
+  filename?: string; 
+  mimeType?: string; 
+  size?: number;
+  isImage: boolean
+} {
+  // 检查是否是图片文件
+  const isImage = Boolean(fileInfo.mimeType && ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(fileInfo.mimeType.toLowerCase()));
+  
+  return {
+    url: fileInfo.url,
+    width: fileInfo.width,
+    height: fileInfo.height,
+    filename: fileInfo.filename,
+    mimeType: fileInfo.mimeType,
+    size: fileInfo.size,
+    isImage
+  };
 }
 

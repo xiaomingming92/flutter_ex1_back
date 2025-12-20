@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { uploadFile, getFileDownloadUrl } from '../services/ossService.js';
+import { uploadImageWithTransaction } from '../services/imageService.js';
 import { AppError } from '../middlewares/errorHandler.js';
 
 /**
@@ -38,13 +39,24 @@ export async function uploadFileController(
     }
 
     const folder = req.body.folder || 'uploads';
-    const fileUrl = await uploadFile(fileBuffer, fileName, folder);
+    const articleId = req.body.articleId;
+    const description = req.body.description;
+
+    // 使用事务方式上传图片并保存到数据库
+    const result = await uploadImageWithTransaction(
+      fileBuffer,
+      fileName,
+      folder,
+      articleId,
+      description
+    );
 
     res.json({
       code: 200,
       message: '文件上传成功',
       data: {
-        url: fileUrl,
+        url: result.url,
+        imageId: result.imageId,
         fileName,
       },
     });

@@ -1,3 +1,11 @@
+/*
+ * @Author: Z2-WIN\xmm wujixmm@gmail.com
+ * @Date: 2025-12-11 11:45:31
+ * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime: 2025-12-20 08:46:02
+ * @FilePath: \studioProjects\flutter_ex1_back\scripts\update-password.js
+ * @Description: 
+ */
 // 按优先级加载环境变量：.env.local 会覆盖 .env
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
