@@ -48,7 +48,7 @@ export async function createArticleController(
   next: NextFunction
 ) {
   try {
-    const { title, content } = req.body;
+    const { title, content, imageIds } = req.body;
     const authorId = (req as any).user?.userId; // 从JWT中间件获取
 
     if (!title || !content) {
@@ -63,7 +63,22 @@ export async function createArticleController(
       throw error;
     }
 
-    const article = await createArticle(title, content, authorId);
+    // 验证 imageIds 格式
+    let parsedImageIds: string[] | undefined;
+    if (imageIds) {
+      if (Array.isArray(imageIds)) {
+        parsedImageIds = imageIds;
+      } else if (typeof imageIds === 'string') {
+        // 支持字符串格式，尝试解析
+        try {
+          parsedImageIds = JSON.parse(imageIds);
+        } catch {
+          parsedImageIds = [imageIds];
+        }
+      }
+    }
+
+    const article = await createArticle(title, content, authorId, parsedImageIds);
 
     res.json({
       code: 201,

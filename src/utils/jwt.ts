@@ -2,8 +2,8 @@
  * @Author: Z2-WIN\xmm wujixmm@gmail.com
  * @Date: 2025-12-06 16:21:20
  * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime: 2025-12-15 17:21:37
- * @FilePath: \studioProjects\ex1_back\src\utils\jwt.ts
+ * @LastEditTime: 2025-12-20 09:26:14
+ * @FilePath: \studioProjects\flutter_ex1_back\src\utils\jwt.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import jwt, { SignOptions } from 'jsonwebtoken';
@@ -28,7 +28,7 @@ export function generateAccessToken(payload: TokenPayload): string {
     payload,
     config.jwt.secret,
     {
-      expiresIn: '15m', // access_token 15分钟过期
+      expiresIn: '60m', // access_token 15分钟过期
     } as SignOptions
   );
   logger.info(`[JWT] 生成access_token - 用户: ${payload.username || payload.userId}`);
