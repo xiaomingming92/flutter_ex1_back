@@ -4,14 +4,13 @@
  * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
  * @LastEditTime: 2025-12-20 09:24:19
  * @FilePath: \studioProjects\flutter_ex1_back\src\services\ossService.ts
- * @Description: 
+ * @Description:
  */
 import COS from 'cos-nodejs-sdk-v5';
 import { config } from '../config/env.js';
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 import sharp from 'sharp';
-import { prisma } from '../config/database.js';
 
 export const cos = new COS({
   SecretId: config.tencentOSS.secretId,
@@ -25,7 +24,7 @@ type ImageInfo = {
   mimeType?: string;
   size?: number;
   filename?: string;
-}
+};
 /**
  * 上传文件到腾讯云OSS
  * @param file 文件Buffer或Stream
@@ -88,7 +87,7 @@ export async function uploadFile(
       height,
       mimeType,
       size,
-      filename: fileName
+      filename: fileName,
     };
 
     // 处理图片元数据（纯函数）
@@ -149,25 +148,30 @@ export async function deleteFile(fileKey: string): Promise<void> {
  * @param fileInfo 图片文件信息
  * @returns 处理后的图片数据，用于数据库保存
  */
-function processImageMetadata(fileInfo: { 
-  url: string; 
-  width?: number; 
-  height?: number; 
-  mimeType?: string; 
-  size?: number; 
-  filename?: string 
-}): { 
-  url: string; 
-  width?: number; 
-  height?: number; 
-  filename?: string; 
-  mimeType?: string; 
+function processImageMetadata(fileInfo: {
+  url: string;
+  width?: number;
+  height?: number;
+  mimeType?: string;
   size?: number;
-  isImage: boolean
+  filename?: string;
+}): {
+  url: string;
+  width?: number;
+  height?: number;
+  filename?: string;
+  mimeType?: string;
+  size?: number;
+  isImage: boolean;
 } {
   // 检查是否是图片文件
-  const isImage = Boolean(fileInfo.mimeType && ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(fileInfo.mimeType.toLowerCase()));
-  
+  const isImage = Boolean(
+    fileInfo.mimeType &&
+    ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'].includes(
+      fileInfo.mimeType.toLowerCase()
+    )
+  );
+
   return {
     url: fileInfo.url,
     width: fileInfo.width,
@@ -175,7 +179,6 @@ function processImageMetadata(fileInfo: {
     filename: fileInfo.filename,
     mimeType: fileInfo.mimeType,
     size: fileInfo.size,
-    isImage
+    isImage,
   };
 }
-

@@ -14,7 +14,6 @@ import { logger } from './logger.js';
 export interface TokenPayload {
   userId: string;
   username?: string;
-  phone?: string;
   expiresIn?: number;
   type?: 'access' | 'refresh';
 }

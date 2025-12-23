@@ -16,9 +16,50 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   articles  Article[]
-
+  avatar    String?
+  bio       String
+  
+  // ✅ 多对多关系：用户-角色
+  roles     Role[]
+  
   @@map("users")
 }
+
+model Role {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // ✅ 多对多关系：角色-用户
+  users       User[]
+  
+  // ✅ 多对多关系：角色-权限（权益自由组合）
+  permissions Permission[]
+  
+  @@map("roles")
+}
+
+model Permission {
+  id            String    @id @default(uuid())
+  name          String    @unique      // 权限名称：如"创建文章"
+  description   String?                // 权限描述
+  category      String                 // 权限分类：如"article" 
+  action        String                 // 权限动作：如"create"
+  code          String    @unique      // 完整权限代码：如"article.create"（自动生成）
+  isActive      Boolean   @default(true) // 是否启用
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // ✅ 多对多关系：权限-角色
+  roles         Role[]
+  
+  @@map("permissions")
+}
+
+
+
 
 model Article {
   id            String         @id @default(uuid())
@@ -96,3 +137,7 @@ model UserToken {
   @@index([accessToken])
   @@map("user_tokens")
 }
+
+
+
+
