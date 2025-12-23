@@ -1,6 +1,10 @@
-/**
- * 安全更新 Prisma Schema 的脚本
- * 包含备份、更新、恢复数据的完整流程
+/*
+ * @Author       : Z2-WIN\xmm wujixmm@gmail.com
+ * @Date         : 2025-12-11 11:45:31
+ * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime : 2025-12-23 09:36:02
+ * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\scripts\update-schema-safely.cjs
+ * @Description  : 包含备份、更新、恢复数据的完整流程
  */
 
 // 按优先级加载环境变量：.env.local 会覆盖 .env
@@ -32,7 +36,7 @@ if (!fs.existsSync('./backups')) {
 }
 
 console.log('步骤 1: 备份当前数据...');
-execSync('node scripts/backup-data.cjs', { stdio: 'inherit' });
+execSync('node scripts/auto-backup-data.cjs', { stdio: 'inherit' });
 
 console.log('\n步骤 2: 生成迁移文件...');
 // 这里会根据你的 schema.prisma 变化生成迁移文件
@@ -56,6 +60,31 @@ console.log('\n步骤 5: 应用迁移...');
 execSync('npx prisma migrate dev', { stdio: 'inherit' });
 
 console.log('\n步骤 6: 重新生成 Prisma Client...');
-execSync('npx prisma generate', { stdio: 'inherit' });
+// 清理旧的 Prisma 客户端缓存
+try {
+  console.log('清理 Prisma 客户端缓存...');
+  const cacheDir = './node_modules/.prisma/client';
+  if (fs.existsSync(cacheDir)) {
+    fs.rmSync(cacheDir, { recursive: true, force: true });
+    console.log('✓ 已清理缓存');
+  }
+} catch (error) {
+  console.log('⚠ 清理缓存时出错:', error.message);
+}
+
+try {
+  execSync('npx prisma generate', { stdio: 'inherit' });
+} catch (error) {
+  console.log('⚠ Prisma Client 生成失败，尝试重新安装...');
+  try {
+    // 重新安装 Prisma 依赖
+    execSync('npm install @prisma/client@latest', { stdio: 'inherit' });
+    execSync('npx prisma generate', { stdio: 'inherit' });
+  } catch (installError) {
+    console.error('重新生成 Prisma Client 失败:', installError);
+    console.log('建议手动运行: npx prisma generate');
+    throw installError;
+  }
+}
 
 console.log('\n完成! Schema 已更新，数据已保留。');
