@@ -1,5 +1,5 @@
-import { prisma } from '@/config/database.js';
-import { validateAccessToken } from '@/services/tokenService.js';
+// import { prisma } from '@/config/database.js';
+// import { validateAccessToken } from '@/services/tokenService.js';
 import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../middlewares/errorHandler.js';
 import { getUserInfo } from '../services/userService.js';

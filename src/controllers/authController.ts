@@ -7,12 +7,11 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
-import { Request, Response, NextFunction } from 'express';
-import { loginUser, refreshUserToken } from '../services/userService.js';
-import { AppError } from '../middlewares/errorHandler.js';
-import { verifyToken } from '@/utils/jwt.js';
-import { validateAccessToken } from '@/services/tokenService.js';
 import { prisma } from '@/config/database.js';
+import { validateAccessToken } from '@/services/tokenService.js';
+import { NextFunction, Request, Response } from 'express';
+import { AppError } from '../middlewares/errorHandler.js';
+import { loginUser, refreshUserToken } from '../services/userService.js';
 
 /**
  * 用户登录接口
@@ -25,7 +24,7 @@ export async function loginController(
   try {
     // 支持接收 username 或 identifier 参数
     const { identifier, username, password } = req.body;
-    
+
     // 确定登录标识符
     const loginIdentifier = identifier || username;
 
@@ -78,7 +77,7 @@ export async function refreshTokenController(
   }
 }
 
-export async function  validateTokenController(
+export async function validateTokenController(
   req: Request,
   res: Response,
   next: NextFunction
@@ -92,7 +91,7 @@ export async function  validateTokenController(
       error.code = 400;
       throw error;
     }
-    
+
     const result = await validateAccessToken(authorization);
     res.json({
       code: 200,
@@ -116,7 +115,7 @@ export async function logoutController(
       error.statusCode = 400;
       throw error;
     }
-    
+
     // 不直接删除记录，而是标记为已撤销
     await prisma.userToken.updateMany({
       where: {
@@ -126,7 +125,7 @@ export async function logoutController(
         revokedAt: new Date(),
       },
     });
-    
+
     res.json({
       code: 200,
       data: null,
