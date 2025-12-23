@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    // ESLint 扩展 - 提供实时语法检查和代码规范提示
+    "dbaeumer.vscode-eslint",
+
+    // Prettier 扩展 - 代码格式化
+    "esbenp.prettier-vscode",
+
+    // TypeScript 增强
+    "ms-vscode.vscode-typescript-next",
+
+    // Git 相关
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+
+    // 代码质量和提示
+    "ms-vscode.vscode-eslint-ts-plugin",
+    "streetsidesoftware.code-spell-checker",
+
+    // Flutter/Dart 支持（如果需要）
+    "Dart-Code.dart-code",
+    "Dart-Code.flutter"
+  ]
+}

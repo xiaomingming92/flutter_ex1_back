@@ -48,7 +48,7 @@ export async function checkImageConsistency(): Promise<{
       });
 
       if (result.Contents) {
-        result.Contents.forEach((content) => {
+        result.Contents.forEach(content => {
           if (content.Key) {
             ossFiles.push(content.Key);
           }
@@ -121,7 +121,7 @@ export async function fixImageConsistency(): Promise<{
   importedToDatabase: number;
 }> {
   let deletedFromDatabase = 0;
-  let importedToDatabase = 0;
+  const importedToDatabase = 0;
 
   try {
     // 先检查一致性
@@ -130,7 +130,7 @@ export async function fixImageConsistency(): Promise<{
     // 1. 删除数据库中不存在于OSS中的图片记录
     for (const imageId of consistencyResult.missingInOSS) {
       // 使用事务删除图片及其关联数据
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async tx => {
         // 删除关联的waterfallItem记录
         await tx.waterfallItem.deleteMany({
           where: {

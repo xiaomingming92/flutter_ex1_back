@@ -1,11 +1,12 @@
 /*
- * @Author: Z2-WIN\xmm wujixmm@gmail.com
- * @Date: 2025-12-06 16:21:20
- * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime: 2025-12-20 09:26:14
- * @FilePath: \studioProjects\flutter_ex1_back\src\utils\jwt.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Author       : Z2-WIN\xmm wujixmm@gmail.com
+ * @Date         : 2025-12-11 11:45:31
+ * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime : 2025-12-23 09:54:39
+ * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\src\utils\jwt.ts
+ * @Description  :
  */
+
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { config } from '../config/env.js';
 import { logger } from './logger.js';
@@ -24,14 +25,12 @@ export interface TokenPayload {
  * @returns access_token字符串
  */
 export function generateAccessToken(payload: TokenPayload): string {
-  const token = jwt.sign(
-    payload,
-    config.jwt.secret,
-    {
-      expiresIn: '60m', // access_token 15分钟过期
-    } as SignOptions
+  const token = jwt.sign(payload, config.jwt.secret, {
+    expiresIn: '60m', // access_token 15分钟过期
+  } as SignOptions);
+  logger.info(
+    `[JWT] 生成access_token - 用户: ${payload.username || payload.userId}`
   );
-  logger.info(`[JWT] 生成access_token - 用户: ${payload.username || payload.userId}`);
   return token;
 }
 
@@ -41,14 +40,12 @@ export function generateAccessToken(payload: TokenPayload): string {
  * @returns refresh_token字符串
  */
 export function generateRefreshToken(payload: TokenPayload): string {
-  const token = jwt.sign(
-    payload,
-    config.jwt.secret,
-    {
-      expiresIn: '30d', // refresh_token 30天过期
-    } as SignOptions
+  const token = jwt.sign(payload, config.jwt.secret, {
+    expiresIn: '30d', // refresh_token 30天过期
+  } as SignOptions);
+  logger.info(
+    `[JWT] 生成refresh_token - 用户: ${payload.username || payload.userId}`
   );
-  logger.info(`[JWT] 生成refresh_token - 用户: ${payload.username || payload.userId}`);
   return token;
 }
 
@@ -60,7 +57,9 @@ export function generateRefreshToken(payload: TokenPayload): string {
 export async function verifyToken(token: string): Promise<TokenPayload> {
   try {
     const decoded = jwt.verify(token, config.jwt.secret) as TokenPayload;
-    logger.info(`[JWT] 验证token成功 - 用户: ${decoded.username || decoded.userId} - 类型: ${decoded.type || '未知'}`);
+    logger.info(
+      `[JWT] 验证token成功 - 用户: ${decoded.username || decoded.userId} - 类型: ${decoded.type || '未知'}`
+    );
     return decoded;
   } catch (error) {
     let errorMessage = 'Token验证失败';
@@ -69,7 +68,9 @@ export async function verifyToken(token: string): Promise<TokenPayload> {
     } else if (error instanceof jwt.JsonWebTokenError) {
       errorMessage = 'Token无效';
     }
-    logger.error(`[JWT] ${errorMessage} - 错误: ${error instanceof Error ? error.message : '未知错误'}`);
+    logger.error(
+      `[JWT] ${errorMessage} - 错误: ${error instanceof Error ? error.message : '未知错误'}`
+    );
     throw new Error(errorMessage);
   }
 }
@@ -89,7 +90,8 @@ export async function refreshToken(token: string): Promise<string> {
   // 移除type字段和过期时间相关信息
   const { type, expiresIn, ...newPayload } = payload;
   const newAccessToken = generateAccessToken(newPayload as TokenPayload);
-  logger.info(`[JWT] 刷新token成功 - 用户: ${payload.username || payload.userId}`);
+  logger.info(
+    `[JWT] 刷新token成功 - 用户: ${payload.username || payload.userId}`
+  );
   return newAccessToken;
 }
-
