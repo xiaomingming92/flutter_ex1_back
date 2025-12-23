@@ -1,4 +1,12 @@
 /*
+ * @Author       : Z2-WIN\xmm wujixmm@gmail.com
+ * @Date         : 2025-12-11 11:45:31
+ * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime : 2025-12-23 18:21:51
+ * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\src\config\env.ts
+ * @Description  :
+ */
+/*
  * @Author: Z2-WIN\xmm wujixmm@gmail.com
  * @Date: 2025-12-06 16:21:20
  * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
@@ -7,6 +15,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import dotenv from 'dotenv';
+import fs from 'fs';
 import { join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -17,15 +26,18 @@ const __dirname = resolve(__filename, '..');
 // 加载.env文件
 dotenv.config({
   path: resolve(join(__dirname, '../../', '.env')),
-  quiet: false
+  quiet: false,
 });
 
-// 加载.env.local文件（本地开发环境配置，优先级更高）
-dotenv.config({
-  path: resolve(join(__dirname, '../../', '.env.local')),
-  override: true, // 覆盖已加载的.env变量
-  quiet: false
-});
+// 加载.env.local文件（本地开发环境配置，优先级更高）- 仅在文件存在时加载
+const envLocalPath = resolve(join(__dirname, '../../', '.env.local'));
+if (fs.existsSync(envLocalPath)) {
+  dotenv.config({
+    path: envLocalPath,
+    override: true, // 覆盖已加载的.env变量
+    quiet: false,
+  });
+}
 
 export const config = {
   port: process.env.PORT || 3000,
@@ -44,9 +56,10 @@ export const config = {
     bucket: process.env.TENCENT_COS_BUCKET || '',
   },
   logging: {
-    level: process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
+    level:
+      process.env.LOG_LEVEL ||
+      (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
     maxFileSize: parseInt(process.env.LOG_MAX_FILE_SIZE || '5242880'), // Default 5MB
     maxFiles: parseInt(process.env.LOG_MAX_FILES || '5'), // Default 5 files
   },
 };
-
