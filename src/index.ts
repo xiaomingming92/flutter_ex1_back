@@ -1,3 +1,11 @@
+/*
+ * @Author       : Z2-WIN\xmm wujixmm@gmail.com
+ * @Date         : 2025-12-11 11:45:31
+ * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
+ * @LastEditTime : 2025-12-24 10:18:41
+ * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\src\index.ts
+ * @Description  :
+ */
 import cors from 'cors';
 import express from 'express';
 import { config } from './config/env.js';
