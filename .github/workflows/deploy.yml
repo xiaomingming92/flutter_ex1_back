@@ -23,32 +23,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # 引用 GitHub Secrets 中的私钥
 
-      # 步骤3：添加服务器到 SSH 信任列表（避免首次登录的指纹验证）
-      - name: Add server to known_hosts
-        run: |
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-
-      # 步骤4：远程登录服务器，执行部署命令（核心）
+      # 步骤3：远程登录服务器，执行部署命令（核心）
       - name: Deploy to server
         run: |
-          # 1. 先把服务器:168 加入 known_hosts，避免指纹提示
-          SERVER_FINGERPRINT=$(ssh-keyscan -p 168 -H ${{ secrets.SERVER_IP }})
-          if ! grep -qF "$SERVER_FINGERPRINT" ~/.ssh/known_hosts; then
-            echo "$SERVER_FINGERPRINT" >> ~/.ssh/known_hosts
-            echo "服务器指纹已添加"
-          else
-            echo "服务器指纹已存在"
-          fi
-          # 2. SSH 连接时指定 168 端口
-          ssh -p 168 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          ssh -p 168 \
+          -o StrictHostKeyChecking=no \
+          -o UserKnownHostsFile=/dev/null \
+          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/ubuntu/Sites/flutter_ex1_back
             git pull origin main
             npm install --production
-            npm run build:prod
-            if [ $? -ne 0 ]; then
-              echo "构建失败，停止部署"
-              exit 1
-            fi
-            pm2 reload ${{ secrets.SERVER_PM2_NAME }} || pm2 restart ${{ secrets.SERVER_PM2_NAME }} || pm2 start ${{ secrets.SERVER_PM2_NAME }}
+            npm run build:prod || exit 1
+            pm2 reload ${{ secrets.SERVER_PM2_NAME }} \
+              || pm2 restart ${{ secrets.SERVER_PM2_NAME }} \
+              || pm2 start ${{ secrets.SERVER_PM2_NAME }}
             echo "$(date +"%Y-%m-%d %H:%M:%S") - 服务部署并重启成功" >> /home/ubuntu/Sites/deploy.log
           EOF
