@@ -28,9 +28,9 @@
     "format:check": "prettier --check \"src/**/*.{ts,js,json,md}\"",
     "quality": "npm run lint && npm run format:check",
     "quality:fix": "npm run lint:fix && npm run format",
-    "pm2:start": "pm2 start dist/index.js --name ex1-back",
-    "pm2:stop": "pm2 stop ex1-back",
-    "pm2:restart": "pm2 restart ex1-back"
+    "pm2:start": "pm2 start dist/index.js --name ex1-api",
+    "pm2:stop": "pm2 stop ex1-api",
+    "pm2:restart": "pm2 restart ex1-api"
   },
   "repository": {
     "type": "git",
