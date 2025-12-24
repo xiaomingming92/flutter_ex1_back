@@ -32,7 +32,7 @@ app.get('/ex1/health', (req, res) => {
 app.use(errorHandler);
 
 // 启动服务器
-const PORT = config.port;
-app.listen(PORT, () => {
+const PORT = Number(config.port);
+app.listen(PORT, '0.0.0.0', () => {
   logger.info(`Server is running on port ${PORT} in ${config.nodeEnv} mode`);
 });
