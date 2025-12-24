@@ -42,7 +42,7 @@ jobs:
           # 2. SSH 连接时指定 168 端口
           ssh -p 168 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/ubuntu/Sites/flutter_ex1_back
-            git pull origin master
+            git pull origin main
             npm install --production
             npm run build:prod
             if [ $? -ne 0 ]; then
