@@ -49,6 +49,6 @@ jobs:
               echo "构建失败，停止部署"
               exit 1
             fi
-            pm2 reload ${{ secrets.SERVER_PM2_NAME }} || pm2 restart ${{ secrets.SERVER_PM2_NAME }}
+            pm2 reload ${{ secrets.SERVER_PM2_NAME }} || pm2 restart ${{ secrets.SERVER_PM2_NAME }} || pm2 start ${{ secrets.SERVER_PM2_NAME }}
             echo "$(date +"%Y-%m-%d %H:%M:%S") - 服务部署并重启成功" >> /home/ubuntu/Sites/deploy.log
           EOF
