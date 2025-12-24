@@ -32,7 +32,8 @@ jobs:
           ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/ubuntu/Sites/flutter_ex1_back
             git pull origin main
-            npm install --production
+            export HUSKY=0
+            npm install
             npm run build:prod || exit 1
             pm2 reload ${{ secrets.SERVER_PM2_NAME }} \
               || pm2 restart ${{ secrets.SERVER_PM2_NAME }} \
