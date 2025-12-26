@@ -2,7 +2,11 @@ import { prisma } from '@/config/database.js';
 import { validateAccessToken } from '@/services/tokenService.js';
 import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../middlewares/errorHandler.js';
-import { loginUser, refreshUserToken } from '../services/userService.js';
+import {
+  loginBySms,
+  loginUser,
+  refreshUserToken,
+} from '../services/userService.js';
 
 /**
  * 用户登录接口
@@ -123,6 +127,74 @@ export async function logoutController(
       message: '注销成功',
     });
   } catch (error: any) {
+    next(error);
+  }
+}
+
+/**
+ * 发送短信验证码
+ */
+export async function sendCodeController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { phone } = req.body;
+
+    if (!phone) {
+      const error: AppError = new Error('手机号不能为空');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const { sendSmsCode } = await import('../services/smsService.js');
+    const result = await sendSmsCode(phone);
+
+    res.json({
+      code: result.success ? 200 : 400,
+      data: result.success ? null : undefined,
+      message: result.message,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * 短信验证码登录
+ */
+export async function smsLoginController(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { phone, code } = req.body;
+
+    if (!phone || !code) {
+      const error: AppError = new Error('手机号和验证码不能为空');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const { verifySmsCode } = await import('../services/smsService.js');
+    const verifyResult = await verifySmsCode(phone, code);
+
+    if (!verifyResult.success) {
+      const error: AppError = new Error(verifyResult.message);
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const result = await loginBySms(phone);
+
+    res.json({
+      code: 200,
+      data: result,
+      message: '登录成功',
+    });
+  } catch (error) {
     next(error);
   }
 }

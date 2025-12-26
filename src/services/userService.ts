@@ -247,3 +247,84 @@ export async function getRealPhone(
   });
   return user?.phone || '';
 }
+
+/**
+ * 通过手机号注册用户
+ */
+export async function registerUserByPhone(
+  phone: string
+): Promise<LoginUserRes> {
+  const existingUser = await prisma.user.findFirst({
+    where: { phone },
+  });
+
+  if (existingUser) {
+    const error: AppError = new Error('该手机号已注册');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const username = `user_${phone.slice(-4)}_${Date.now()}`;
+  const defaultPassword = '123456';
+  const hashedPassword = await bcrypt.hash(defaultPassword, 10);
+
+  const user = await prisma.user.create({
+    data: {
+      username,
+      phone,
+      password: hashedPassword,
+      name: `用户${phone.slice(-4)}`,
+    },
+  });
+
+  const payload: TokenPayload = {
+    userId: user.id,
+    username: user.username || undefined,
+  };
+
+  const access_token = generateAccessToken(payload);
+  const refresh_token = generateRefreshToken(payload);
+
+  const accessExpiresAt = new Date();
+  accessExpiresAt.setMinutes(accessExpiresAt.getMinutes() + 15);
+
+  const refreshExpiresAt = new Date();
+  refreshExpiresAt.setDate(refreshExpiresAt.getDate() + 30);
+
+  await prisma.userToken.create({
+    data: {
+      userId: user.id,
+      accessToken: access_token,
+      refreshToken: refresh_token,
+      accessExpiresAt,
+      refreshExpiresAt,
+    },
+  });
+
+  return {
+    accessToken: access_token,
+    refreshToken: refresh_token,
+    accessExpiresAt: accessExpiresAt.valueOf(),
+    refreshExpiresAt: refreshExpiresAt.valueOf(),
+    userKeyInfo: {
+      id: user.id,
+      avatar: user.avatar || undefined,
+      name: user.name || undefined,
+    },
+  };
+}
+
+/**
+ * 短信登录（如果用户不存在则自动注册）
+ */
+export async function loginBySms(phone: string): Promise<LoginUserRes> {
+  const user = await prisma.user.findFirst({
+    where: { phone },
+  });
+
+  if (user) {
+    return loginUser(phone, user.password);
+  } else {
+    return registerUserByPhone(phone);
+  }
+}
