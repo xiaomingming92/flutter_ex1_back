@@ -2,7 +2,7 @@
  * @Author       : Z2-WIN\xmm wujixmm@gmail.com
  * @Date         : 2025-12-11 11:45:31
  * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime : 2025-12-23 18:09:17
+ * @LastEditTime : 2026-01-05 14:59:52
  * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\src\services\userService.ts
  * @Description  :
  */
@@ -173,13 +173,13 @@ export async function refreshUserToken(
 
 type UserInfo = {
   id: string;
-  name: string;
+  username: string;
   avatar: string;
   roles: { name: string; permissions: string[] }[];
   createdAt: Date;
   updatedAt: Date;
   bio: string;
-  phone: string;
+  maskedPhone: string;
 };
 
 export async function getUserInfo(id: string): Promise<UserInfo> {
@@ -213,17 +213,17 @@ export async function getUserInfo(id: string): Promise<UserInfo> {
     name: role.name,
     permissions: role.permissions.map(permission => permission.code), // 返回权限的code字段
   }));
-  const maskPhone = user.phone?.replace(/\d{4,8}/g, '*') || ''; // 手机号中间4位用*号隐藏
+  const maskedPhone = user.phone?.replace(/\d{4,8}/g, '*') || ''; // 手机号中间4位用*号隐藏
 
   return {
     id: user.id,
-    name: user.name || user.username || '',
+    username: user.username || '',
     avatar: user.avatar || '', // 头像URL
     roles: rolesWithPermissions, // 用户角色列表（从关联查询结果中提取）
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
     bio: user.bio || '', // 用户简介
-    phone: maskPhone, // 用户手机号
+    maskedPhone, // 用户手机号
   };
 }
 export async function getRealPhone(
@@ -274,6 +274,7 @@ export async function registerUserByPhone(
       phone,
       password: hashedPassword,
       name: `用户${phone.slice(-4)}`,
+      bio: '',
     },
   });
 
