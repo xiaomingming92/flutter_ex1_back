@@ -52,7 +52,7 @@
     "ioredis": "^5.8.2",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
-    "prisma": "^6.6.0",
+    "prisma": "6.6.0",
     "sharp": "^0.34.5",
     "uuid": "^13.0.0",
     "winston": "^3.19.0"
