@@ -1,9 +1,9 @@
 /*
  * @Author       : Z2-WIN\xmm wujixmm@gmail.com
  * @Date         : 2025-12-11 11:45:31
- * @LastEditors  : Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime : 2026-01-05 14:59:52
- * @FilePath     : \ex1c:\Users\xmm\studioProjects\flutter_ex1_back\src\services\userService.ts
+ * @LastEditors  : wujixmm wujixmm@gmail.com
+ * @LastEditTime : 2026-01-13 10:02:36
+ * @FilePath     : /flutter_ex1_back/src/services/userService.ts
  * @Description  :
  */
 import { logger } from '@/utils/logger.js';
@@ -16,7 +16,11 @@ import {
   TokenPayload,
   verifyToken,
 } from '../utils/jwt.js';
+import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * 用户登录返回数据结构
+ */
 export type LoginUserRes = {
   accessToken: string;
   refreshToken: string;
@@ -270,6 +274,7 @@ export async function registerUserByPhone(
 
   const user = await prisma.user.create({
     data: {
+      accountId: uuidv4(),
       username,
       phone,
       password: hashedPassword,
