@@ -150,7 +150,11 @@ FLUSH PRIVILEGES;
 #### 2. 初始化数据库结构
 
 ```bash
-# 应用数据库迁移
+cp .env.example .env.local
+# 编辑 DATABASE_URL
+npx prisma migrate deploy # 生产
+npx prisma generate # 生成 client
+# 应用数据库迁移(可选)
 npm run update-schema
 ```
 
