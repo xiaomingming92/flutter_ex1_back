@@ -1,7 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
-import { uploadFile, getFileDownloadUrl } from '../services/ossService.js';
-import { uploadImageWithTransaction } from '../services/imageService.js';
+/*
+ * @Author       : wujixmm
+ * @Date         : 2025-12-27 11:03:50
+ * @LastEditors  : wujixmm wujixmm@gmail.com
+ * @LastEditTime : 2026-01-14 13:32:16
+ * @FilePath     : /flutter_ex1_back/src/controllers/ossController.ts
+ * @Description  : OSS控制器
+ *
+ */
+import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../middlewares/errorHandler.js';
+import { uploadImageWithTransaction } from '../services/imageService.js';
+import { getFileDownloadUrl } from '../services/ossService.js';
 
 /**
  * 文件上传接口
@@ -75,10 +84,12 @@ export async function getFileDownloadUrlController(
 ) {
   try {
     const { fileKey } = req.params;
-    const expires = req.query.expires ? parseInt(req.query.expires as string) : 3600;
+    const expires = req.query.expires
+      ? parseInt(req.query.expires as string)
+      : 3600;
 
-    if (!fileKey) {
-      const error: AppError = new Error('文件key不能为空');
+    if (!fileKey || typeof fileKey !== 'string') {
+      const error: AppError = new Error('文件key格式错误，必须为单个字符串');
       error.statusCode = 400;
       throw error;
     }
@@ -97,4 +108,3 @@ export async function getFileDownloadUrlController(
     next(error);
   }
 }
-

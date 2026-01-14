@@ -1,14 +1,16 @@
 /*
- * @Author: Z2-WIN\xmm wujixmm@gmail.com
- * @Date: 2025-12-11 11:45:31
- * @LastEditors: Z2-WIN\xmm wujixmm@gmail.com
- * @LastEditTime: 2025-12-19 14:33:21
- * @FilePath: \studioProjects\flutter_ex1_back\src\controllers\articleController.ts
- * @Description: 
+ * @Author       : wujixmm
+ * @Date         : 2025-12-11 11:45:31
+ * @LastEditors  : wujixmm wujixmm@gmail.com
+ * @LastEditTime : 2026-01-14 13:29:16
+ * @FilePath     : /flutter_ex1_back/src/controllers/articleController.ts
+ * @Description  : 文章控制器
+ *
  */
-import { Request, Response, NextFunction } from 'express';
-import { getArticleById, createArticle } from '../services/articleService.js';
+
+import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../middlewares/errorHandler.js';
+import { createArticle, getArticleById } from '../services/articleService.js';
 
 /**
  * 通过ID获取文章
@@ -21,12 +23,11 @@ export async function getArticleByIdController(
   try {
     const { id } = req.params;
 
-    if (!id) {
-      const error: AppError = new Error('文章ID不能为空');
+    if (!id || typeof id !== 'string') {
+      const error: AppError = new Error('文章ID格式错误，必须为单个字符串');
       error.statusCode = 400;
       throw error;
     }
-
     const article = await getArticleById(id);
 
     res.json({
@@ -78,7 +79,12 @@ export async function createArticleController(
       }
     }
 
-    const article = await createArticle(title, content, authorId, parsedImageIds);
+    const article = await createArticle(
+      title,
+      content,
+      authorId,
+      parsedImageIds
+    );
 
     res.json({
       code: 201,
@@ -89,4 +95,3 @@ export async function createArticleController(
     next(error);
   }
 }
-
