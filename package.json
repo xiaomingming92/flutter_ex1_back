@@ -30,7 +30,7 @@
     "quality:fix": "npm run lint:fix && npm run format",
     "pm2:start": "pm2 start dist/index.js --name ex1-api",
     "pm2:stop": "pm2 stop ex1-api",
-    "pm2:restart": "pm2 restart ex1-api"
+    "pm2:restart": "pm2 restart ex1-api --update-env"
   },
   "repository": {
     "type": "git",
