@@ -41,4 +41,5 @@ deploy-job:
     - pm2 save
 
     # 4. 留痕
+    - echo "$(date '+%F %T') build and deploy finished"
     - echo "$(date '+%F %T') deploy ok" >> "$RUN_DIR/deploy.log"
