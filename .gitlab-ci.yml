@@ -16,7 +16,7 @@ deploy-job:
   only:
     - main
   before_script: # 确保容器里有 volta、rsync、ssh（可选）
-    - apk add --no-cache rsync openssh-client
+    - RUN apt update && apt install -y --no-install-recommends rsync openssh-client git && rm -rf /var/lib/apt/lists/*
   script:
     # 1. 依赖安装 & 构建
     - npm ci
