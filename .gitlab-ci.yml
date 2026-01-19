@@ -1,4 +1,5 @@
 stages:
+  - build
   - deploy
 
 variables:
@@ -10,26 +11,40 @@ variables:
   RUN_DIR: /home/xmm/Sites/flutter_ex1_back # 宿主机真实目录
   ENTRY_FILE: /home/xmm/Sites/flutter_ex1_back/dist/index.js
 
-deploy-job:
-  stage: deploy
+build-job:
+  stage: build
   tags: ['ex1-api'] # 必须落在同一台宿主机
   only:
     - main
-  before_script: # 确保容器里有 volta、rsync、ssh（可选）
-    - apt update && apt install -y --no-install-recommends rsync openssh-client git && rm -rf /var/lib/apt/lists/*
+  before_script: # 确保容器里有 volta
+    # - apt update && apt install -y --no-install-recommends rsync openssh-client git && rm -rf /var/lib/apt/lists/*
   script:
     # 1. 依赖安装 & 构建
     - npm ci
     - source "$RUN_DIR/.env.local"
     - npm run build:prod
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 day
 
-    # 2. 产物/配置同步
+deploy-job:
+  stage: deploy
+  tags: ['ex1-api'] # 必须落在同一台宿主机
+  only:
+    - main
+  dependencies:
+    - build-job
+  before_script: # 确保容器里有 rsync、ssh（可选）
+    # - apt update && apt install -y --no-install-recommends rsync openssh-client && rm -rf /var/lib/apt/lists/*
+  script:
+    # 1. 产物/配置同步
     - rsync -av --delete dist/ "$RUN_DIR/dist/"
     - rsync -av package*.json "$RUN_DIR/"
     - rsync -av prisma "$RUN_DIR/"
     - rsync -av ecosystem.config.cjs "$RUN_DIR/"
 
-    # 3. PM2 重载
+    # 2. PM2 重载
     - cd "$RUN_DIR"
     # - |
     #   if pm2 describe "$APP_NAME" >/dev/null 2>&1; then
@@ -40,6 +55,6 @@ deploy-job:
     - pm2 start ecosystem.config.cjs --only "$APP_NAME" --update-env --env production
     - pm2 save
 
-    # 4. 留痕
-    - echo "$(date '+%F %T') build and deploy finished"
+    # 3. 留痕
+    - echo "$(date '+%F %T') deploy finished"
     - echo "$(date '+%F %T') deploy ok" >> "$RUN_DIR/deploy.log"
