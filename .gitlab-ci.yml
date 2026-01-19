@@ -13,6 +13,7 @@ variables:
 
 build-job:
   image: gitlab-runner-node-ex1:latest
+  pull_policy: if-not-present
   stage: build
   tags: ['ex1-api'] # 必须落在同一台宿主机
   only:
@@ -32,6 +33,7 @@ build-job:
 
 deploy-job:
   image: gitlab-runner-node-ex1:latest
+  pull_policy: if-not-present
   stage: deploy
   tags: ['ex1-api'] # 必须落在同一台宿主机
   only:
