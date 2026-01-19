@@ -8,3 +8,4 @@ backups
 logs
 prisma/migrations
 .vscode/*.local.json
+/.idea
