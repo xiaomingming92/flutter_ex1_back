@@ -17,10 +17,9 @@ build-job:
   tags: ['ex1-api'] # 必须落在同一台宿主机
   only:
     - main
-  before_script: # 确保容器里有 volta
-    # echo "which volta: $(which volta)"
+  before_script:
+    # 确保容器里有 volta
     - echo "volta version: $(volta --version)"
-    # - apt update && apt install -y --no-install-recommends rsync openssh-client git && rm -rf /var/lib/apt/lists/*
   script:
     # 1. 依赖安装 & 构建
     - npm ci
